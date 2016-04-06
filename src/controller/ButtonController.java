@@ -24,6 +24,7 @@ public class ButtonController extends AbstractController implements ActionListen
     public ActionEvent getActionEvent() {
         return event;
     }
+   
 
 
 
@@ -32,18 +33,29 @@ public class ButtonController extends AbstractController implements ActionListen
     {
         setActionEvent(e);
         Thread performerThread = new Thread() {
-
+        
+        
             public void run() {
                 ActionEvent e = getActionEvent();
                 String command = e.getActionCommand();
 
                 switch (command) {
                     case "one step":
+                    	simulator.runTrue();
                         simulator.runSteps(1);
                         break;
                     case "hundred steps":
+                    	simulator.runTrue();
                         simulator.runSteps(100);
                         break;
+                    case "Start":
+                    		simulator.runTrue();
+                        	simulator.runSteps(10000);
+                        	break;
+                    case "Pause":
+                         	simulator.runFalse();
+                         	
+                        break;   
                 }
             }
 
