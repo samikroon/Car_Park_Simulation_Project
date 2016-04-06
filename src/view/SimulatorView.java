@@ -1,3 +1,10 @@
+package view;
+
+import controller.ButtonController;
+import logic.Car;
+import logic.Location;
+import main.Simulator;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,16 +15,18 @@ public class SimulatorView extends JFrame {
     private int numberOfRows;
     private int numberOfPlaces;
     private Car[][][] cars;
+    private ButtonController buttonController;
 
 
 
-    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces, Simulator parent) {
+    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces, Simulator simulator) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         
         carParkView = new CarParkView();
+        buttonController = new ButtonController(simulator);
 
         Container contentPane = getContentPane();
         //contentPane.add(stepLabel, BorderLayout.NORTH);
@@ -25,14 +34,22 @@ public class SimulatorView extends JFrame {
         //contentPane.add(population, BorderLayout.SOUTH);
 
         JButton stepForward = new JButton("one step");
-        stepForward.addActionListener(parent);
+        stepForward.addActionListener(buttonController);
 
         JButton stepHundredForward = new JButton("hundred steps");
-        stepHundredForward.addActionListener(parent);
+        stepHundredForward.addActionListener(buttonController);
+
+        JButton startButton = new JButton("Start");
+        startButton.addActionListener(buttonController);
+
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.addActionListener(buttonController);
 
         JToolBar stepBar = new JToolBar();
         stepBar.add(stepForward);
         stepBar.add(stepHundredForward);
+        stepBar.add(startButton);
+        stepBar.add(pauseButton);
         contentPane.add(stepBar, BorderLayout.SOUTH);
 
 

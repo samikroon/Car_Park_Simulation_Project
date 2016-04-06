@@ -1,20 +1,28 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package main;
+
+import logic.AdHocCar;
+import logic.Car;
+import logic.CarQueue;
+import logic.Location;
+import view.SimulatorView;
+
+
 import java.util.Random;
 
-public class Simulator implements ActionListener{
+public class Simulator {
 
     private CarQueue entranceCarQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
-    private ActionEvent event;
+
 
     private int day = 0;
     private int hour = 0;
     private int minute = 0;
 
     private int tickPause = 100;
+
 
     int weekDayArrivals= 50; // average number of arriving cars per hour
     int weekendArrivals = 90; // average number of arriving cars per hour
@@ -136,46 +144,5 @@ public class Simulator implements ActionListener{
             e.printStackTrace();
         }
     }
-
-
-    public void setActionEvent(ActionEvent e) {
-        event = e;
-    }
-
-    public ActionEvent getActionEvent() {
-        return event;
-    }
-
-
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        setActionEvent(e);
-        Thread performerThread = new Thread() {
-
-            public void run() {
-                ActionEvent e = getActionEvent();
-                String command = e.getActionCommand();
-
-                switch (command) {
-                    case "one step":
-                        runSteps(1);
-                        break;
-                    case "hundred steps":
-
-                        runSteps(100);
-                }
-            }
-
-        };
-        performerThread.start();
-    }
-
-
-
-    public static void main (String[] args) {
-        new Simulator();
-    }
-
 
 }
