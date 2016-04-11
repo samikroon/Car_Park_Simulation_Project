@@ -19,6 +19,10 @@ public class PassHoldersPayment {
         return parkingHolderRevenue;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
 
 
 }

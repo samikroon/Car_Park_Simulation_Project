@@ -22,7 +22,8 @@ public class RevenueView extends AbstractView{
 
     public void updateRevenueView() {
         double currentRevenue = (simulator.getCarsPayed() * price) + simulator.getPassHoldersPayment().getParkingHolderRevenue();
-        double expectedRevenue = (simulator.getCarsPayed() + simulator.getCarsInside()) * price;
+        double expectedRevenue = ((simulator.getCarsPayed() + simulator.getCarsNormalInside()) * price) +
+                (simulator.getPassHoldersPayment().getParkingHolderRevenue() + (simulator.getCarsHoldersInside() * simulator.getPassHoldersPayment().getPrice()) );
         data[0][1] = currentRevenue;
         data[1][1]= expectedRevenue;
         table = new JTable(data, columnNames);

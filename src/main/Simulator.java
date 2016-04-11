@@ -23,7 +23,8 @@ public class Simulator {
     private int tickPause = 100;
     private boolean run = true;
 
-    private int carsInside = 0;
+    private int carsNormalInside = 0;
+    private int carsHoldersInside = 0;
     private int carsPayed = 0;
 
 
@@ -120,9 +121,13 @@ public class Simulator {
             Location freeLocation = simulatorView.getFirstFreeLocation();
             if (freeLocation != null) {
                 simulatorView.setCarAt(freeLocation, car);
-                carsInside++;
                 int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
                 car.setMinutesLeft(stayMinutes);
+                if (car.isPassHolder()) {
+                    carsHoldersInside++;
+                } else {
+                    carsNormalInside++;
+                }
             }
         }
 
@@ -165,7 +170,11 @@ public class Simulator {
             if (car == null) {
                 break;
             }
-            carsInside--;
+            if (car.isPassHolder()) {
+                carsHoldersInside--;
+            } else {
+                carsNormalInside--;
+            }
             // Bye!
         }
 
@@ -193,8 +202,12 @@ public class Simulator {
         return paymentCarQueue;
     }
 
-    public int getCarsInside() {
-        return carsInside;
+    public int getCarsNormalInside() {
+        return carsNormalInside;
+    }
+
+    public int getCarsHoldersInside() {
+        return carsHoldersInside;
     }
 
     public int getCarsPayed() {

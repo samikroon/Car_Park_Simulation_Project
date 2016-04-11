@@ -168,7 +168,6 @@ public class SimulatorView extends AbstractView {
         }
     
         public void tick() {
-            System.out.println("simulatorview-tick");
             for (int floor = 0; floor < getNumberOfFloors(); floor++) {
                 for (int row = 0; row < getNumberOfRows(); row++) {
                     for (int place = 0; place < getNumberOfPlaces(); place++) {
