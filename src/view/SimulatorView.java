@@ -66,23 +66,15 @@ public class SimulatorView extends AbstractView {
         infoView = new InfoView(simulator);
         revenueView = new RevenueView(simulator);
         scrollPane = new JScrollPane(infoView.getTable());
-<<<<<<< HEAD
         scrollPane2 = new JScrollPane(revenueView.getTable());
         pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, scrollPane2);
         contentPane.add(pane, BorderLayout.EAST);
 
-
-
-=======
-        contentPane.add(scrollPane, BorderLayout.EAST);
         
         JMenuBar terBar = new JMenuBar();
         terBar.add(terminate);
         contentPane.add(terBar, BorderLayout.NORTH);
-        
-        
-        
->>>>>>> origin/master
+
         pack();
         setVisible(true);
 
