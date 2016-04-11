@@ -25,9 +25,6 @@ public class Simulator {
     private int tickPause = 100;
     private boolean run = true;
 
-    private int entranceQueueLength = 0;
-    private int exitQueueLength = 0;
-    private int paymentQueueLength = 0;
     private int carsInside = 0;
     private int carsPayed = 0;
 
@@ -37,7 +34,7 @@ public class Simulator {
 
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 10; // number of cars that can pay per minute
-    int exitSpeed = 9; // number of cars that can leave per minute
+    int exitSpeed = 3; // number of cars that can leave per minute
 
     public Simulator() {
         entranceCarQueue = new CarQueue();
@@ -109,8 +106,6 @@ public class Simulator {
         for (int i = 0; i < numberOfCarsPerMinute; i++) {
             Car car = new AdHocCar();
             entranceCarQueue.addCar(car);
-            entranceQueueLength++;
-            System.out.println(entranceQueueLength);
         }
 
         // Remove car from the front of the queue and assign to a parking space.
@@ -123,7 +118,6 @@ public class Simulator {
             Location freeLocation = simulatorView.getFirstFreeLocation();
             if (freeLocation != null) {
                 simulatorView.setCarAt(freeLocation, car);
-                entranceQueueLength--;
                 carsInside++;
                 int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
                 car.setMinutesLeft(stayMinutes);
@@ -141,7 +135,6 @@ public class Simulator {
             }
             car.setIsPaying(true);
             paymentCarQueue.addCar(car);
-            paymentQueueLength++;
         }
 
         // Let cars pay.
@@ -153,8 +146,6 @@ public class Simulator {
             // TODO Handle payment.
             simulatorView.removeCarAt(car.getLocation());
             exitCarQueue.addCar(car);
-            paymentQueueLength--;
-            exitQueueLength++;
             carsPayed++;
 
         }
@@ -165,7 +156,6 @@ public class Simulator {
             if (car == null) {
                 break;
             }
-            exitQueueLength--;
             carsInside--;
             // Bye!
         }
@@ -182,16 +172,16 @@ public class Simulator {
         }
     }
 
-    public int getEntranceQueueLength() {
-        return entranceQueueLength;
+    public CarQueue getExitCarQueue() {
+        return exitCarQueue;
     }
 
-    public int getExitQueueLength() {
-        return exitQueueLength;
+    public CarQueue getEntranceCarQueue() {
+        return entranceCarQueue;
     }
 
-    public int getPaymentQueueLength() {
-        return paymentQueueLength;
+    public CarQueue getPaymentCarQueue() {
+        return paymentCarQueue;
     }
 
     public int getCarsInside() {

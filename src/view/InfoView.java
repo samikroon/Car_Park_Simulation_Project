@@ -28,9 +28,9 @@ public class InfoView extends AbstractView {
     }
 
     public void updateData() {
-        int entranceQueue = simulator.getEntranceQueueLength();
-        int exitQueue = simulator.getExitQueueLength();
-        int paymentQueue = simulator.getPaymentQueueLength();
+        int entranceQueue = simulator.getEntranceCarQueue().getQueue().size();
+        int exitQueue = simulator.getExitCarQueue().getQueue().size();
+        int paymentQueue = simulator.getPaymentCarQueue().getQueue().size();
         int carsInside = simulator.getCarsInside();
         int carsPayed = simulator.getCarsPayed();
         System.out.println("entrance: " + entranceQueue + "exit: " + exitQueue + "payment: " + paymentQueue);
