@@ -9,17 +9,20 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class SimulatorView extends JFrame {
+public class SimulatorView extends AbstractView {
     private CarParkView carParkView;
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
     private Car[][][] cars;
     private ButtonController buttonController;
+    private InfoView infoView;
+    private JScrollPane scrollPane;
 
 
 
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces, Simulator simulator) {
+        super(simulator);
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
@@ -30,7 +33,7 @@ public class SimulatorView extends JFrame {
 
         Container contentPane = getContentPane();
         //contentPane.add(stepLabel, BorderLayout.NORTH);
-        contentPane.add(carParkView, BorderLayout.CENTER);
+        contentPane.add(carParkView, BorderLayout.WEST);
         //contentPane.add(population, BorderLayout.SOUTH);
 
         JButton stepForward = new JButton("one step");
@@ -45,12 +48,16 @@ public class SimulatorView extends JFrame {
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(buttonController);
 
-        JToolBar stepBar = new JToolBar();
+        JMenuBar stepBar = new JMenuBar();
         stepBar.add(stepForward);
         stepBar.add(stepHundredForward);
         stepBar.add(startButton);
         stepBar.add(pauseButton);
         contentPane.add(stepBar, BorderLayout.SOUTH);
+
+        infoView = new InfoView(simulator);
+        scrollPane = new JScrollPane(infoView.getTable());
+        contentPane.add(scrollPane, BorderLayout.EAST);
 
 
 
@@ -62,7 +69,11 @@ public class SimulatorView extends JFrame {
 
 
 
+
+
     public void updateView() {
+        infoView.updateData();
+        scrollPane.setViewportView(infoView.getTable());
         carParkView.updateView();
     }
     
@@ -181,7 +192,7 @@ public class SimulatorView extends JFrame {
          * Overridden. Tell the GUI manager how big we would like to be.
          */
         public Dimension getPreferredSize() {
-            return new Dimension(800, 500);
+            return new Dimension(1000, 500);
         }
     
         /**

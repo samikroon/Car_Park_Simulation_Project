@@ -1,6 +1,5 @@
 package controller;
 
-import controller.AbstractController;
 import main.Simulator;
 
 import java.awt.event.ActionEvent;
@@ -39,10 +38,19 @@ public class ButtonController extends AbstractController implements ActionListen
 
                 switch (command) {
                     case "one step":
+                        simulator.runTrue();
                         simulator.runSteps(1);
                         break;
                     case "hundred steps":
+                        simulator.runTrue();
                         simulator.runSteps(100);
+                        break;
+                    case "Start":
+                        simulator.runTrue();
+                        simulator.runSteps(Integer.MAX_VALUE);
+                        break;
+                    case "Pause":
+                        simulator.runFalse();
                         break;
                 }
             }

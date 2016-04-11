@@ -4,6 +4,7 @@ import logic.AdHocCar;
 import logic.Car;
 import logic.CarQueue;
 import logic.Location;
+import view.InfoView;
 import view.SimulatorView;
 
 
@@ -17,11 +18,13 @@ public class Simulator {
     private SimulatorView simulatorView;
 
 
+
     private int day = 0;
     private int hour = 0;
     private int minute = 0;
 
     private int tickPause = 100;
+    private boolean run = true;
 
 
     int weekDayArrivals= 50; // average number of arriving cars per hour
@@ -39,16 +42,34 @@ public class Simulator {
     }
 
     public void run() {
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10000 && run; i++) {
             tick();
         }
     }
 
     public void runSteps(int steps) {
-        System.out.println("run " + steps + " steps");
-        for (int i = 0; i < steps; i++) {
+        for (int i = 0; i < steps && run; i++) {
             tick();
         }
+    }
+
+    /**
+     * Created by machiel 4/6/16
+     * De methode runFalse geeft aan de boolean run de waarde False.
+     * Door aan de boolean run de waarde false te geven
+     * zullen de methode's run en runSteps hun for loop niet verder door lopen.
+     */
+    public void runFalse(){
+        this.run = false;
+        System.out.println("runFalse methode");
+    }
+    /**
+     * Created by machiel 4/6/16
+     * De methode runTrue geeft aan de boolean run de waarde true.
+     * Deze waarde moet true zijn als methode's run en runsteps wilt uit voeren.
+     */
+    public void runTrue(){
+        this.run = true;
     }
 
     private void tick() {
@@ -145,4 +166,15 @@ public class Simulator {
         }
     }
 
+    public CarQueue getEntranceCarQueue() {
+        return entranceCarQueue;
+    }
+
+    public CarQueue getPaymentCarQueue() {
+        return entranceCarQueue;
+    }
+
+    public CarQueue getExitCarQueue() {
+        return exitCarQueue;
+    }
 }

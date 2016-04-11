@@ -39,7 +39,6 @@ public abstract class Car {
     }
 
     public void tick() {
-        System.out.println("car-tick");
         minutesLeft--;
     }
 
