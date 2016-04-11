@@ -53,6 +53,9 @@ public class ButtonController extends AbstractController implements ActionListen
                     case "Pause":
                         simulator.runFalse();
                         break;
+                    case "Exit Application":
+                    	System.exit(0);
+                    	break;
                 }
             }
 

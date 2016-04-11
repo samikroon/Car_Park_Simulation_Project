@@ -7,6 +7,7 @@ import main.Simulator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 
 public class SimulatorView extends AbstractView {
@@ -50,6 +51,10 @@ public class SimulatorView extends AbstractView {
 
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(buttonController);
+        
+        JButton terminate = new JButton("Exit Application");
+        terminate.addActionListener(buttonController);
+      
 
         JMenuBar stepBar = new JMenuBar();
         stepBar.add(stepForward);
@@ -61,12 +66,23 @@ public class SimulatorView extends AbstractView {
         infoView = new InfoView(simulator);
         revenueView = new RevenueView(simulator);
         scrollPane = new JScrollPane(infoView.getTable());
+<<<<<<< HEAD
         scrollPane2 = new JScrollPane(revenueView.getTable());
         pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, scrollPane2);
         contentPane.add(pane, BorderLayout.EAST);
 
 
 
+=======
+        contentPane.add(scrollPane, BorderLayout.EAST);
+        
+        JMenuBar terBar = new JMenuBar();
+        terBar.add(terminate);
+        contentPane.add(terBar, BorderLayout.NORTH);
+        
+        
+        
+>>>>>>> origin/master
         pack();
         setVisible(true);
 

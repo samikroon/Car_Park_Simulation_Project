@@ -7,6 +7,3 @@ public class AdHocCar extends Car {
 
     }
 }
-
-
-// testing git push brendan
