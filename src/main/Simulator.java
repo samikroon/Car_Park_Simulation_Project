@@ -124,6 +124,7 @@ public class Simulator {
             }
         }
 
+
         // Perform car park tick.
         simulatorView.tick();
 
