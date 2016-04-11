@@ -110,6 +110,7 @@ public class Simulator {
         for (int i = 0; i < numberOfCarsPerMinute; i++) {
             Car car = new AdHocCar();
             entranceCarQueue.addCar(car);
+            entranceQueueLength++;
         }
 
         // Remove car from the front of the queue and assign to a parking space.
@@ -181,15 +182,23 @@ public class Simulator {
         }
     }
 
-    public CarQueue getEntranceCarQueue() {
-        return entranceCarQueue;
+    public int getEntranceQueueLength() {
+        return entranceQueueLength;
     }
 
-    public CarQueue getPaymentCarQueue() {
-        return entranceCarQueue;
+    public int getExitQueueLength() {
+        return exitQueueLength;
     }
 
-    public CarQueue getExitCarQueue() {
-        return exitCarQueue;
+    public int getPaymentQueueLength() {
+        return paymentQueueLength;
+    }
+
+    public int getCarsInside() {
+        return carsInside;
+    }
+
+    public int getCarsPayed() {
+        return carsPayed;
     }
 }
