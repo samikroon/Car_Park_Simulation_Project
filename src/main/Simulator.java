@@ -26,9 +26,11 @@ public class Simulator {
     private int tickPause = 100;
     private boolean run = true;
 
-    private int carsLeft = 0;
-    private int carsPayed = 0;
+    private int entranceQueueLength = 0;
+    private int exitQueueLength = 0;
+    private int paymentQueueLength = 0;
     private int carsInside = 0;
+    private int carsPayed = 0;
 
 
     int weekDayArrivals= 50; // average number of arriving cars per hour
@@ -120,6 +122,8 @@ public class Simulator {
             Location freeLocation = simulatorView.getFirstFreeLocation();
             if (freeLocation != null) {
                 simulatorView.setCarAt(freeLocation, car);
+                entranceQueueLength--;
+                carsInside++;
                 int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
                 car.setMinutesLeft(stayMinutes);
             }
@@ -136,6 +140,7 @@ public class Simulator {
             }
             car.setIsPaying(true);
             paymentCarQueue.addCar(car);
+            paymentQueueLength++;
         }
 
         // Let cars pay.
@@ -147,6 +152,9 @@ public class Simulator {
             // TODO Handle payment.
             simulatorView.removeCarAt(car.getLocation());
             exitCarQueue.addCar(car);
+            paymentQueueLength--;
+            exitQueueLength++;
+            carsPayed++;
 
         }
 
@@ -156,6 +164,8 @@ public class Simulator {
             if (car == null) {
                 break;
             }
+            exitQueueLength--;
+            carsInside--;
             // Bye!
         }
 
