@@ -26,6 +26,10 @@ public class Simulator {
     private int tickPause = 100;
     private boolean run = true;
 
+    private int carsLeft = 0;
+    private int carsPayed = 0;
+    private int carsInside = 0;
+
 
     int weekDayArrivals= 50; // average number of arriving cars per hour
     int weekendArrivals = 90; // average number of arriving cars per hour
@@ -143,6 +147,7 @@ public class Simulator {
             // TODO Handle payment.
             simulatorView.removeCarAt(car.getLocation());
             exitCarQueue.addCar(car);
+
         }
 
         // Let cars leave.

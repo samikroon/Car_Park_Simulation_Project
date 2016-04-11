@@ -21,13 +21,12 @@ public class InfoView extends AbstractView {
         data[1][1] = 0;
         data[2][1] = 0;
         table = new JTable(data, columnNames);
-
     }
 
     public void updateData() {
-        int entranceQueue = simulator.getEntranceCarQueue().getNumberOfCars();
-        int exitQueue = simulator.getExitCarQueue().getNumberOfCars();
-        int paymentQueue = simulator.getPaymentCarQueue().getNumberOfCars();
+        int entranceQueue = simulator.getEntranceCarQueue().getQueue().size();
+        int exitQueue = simulator.getExitCarQueue().getQueue().size();
+        int paymentQueue = simulator.getPaymentCarQueue().getQueue().size();
         System.out.println("entrance: " + entranceQueue + "exit: " + exitQueue + "payment: " + paymentQueue);
         data[0][1] = entranceQueue;
         data[1][1] = exitQueue;
