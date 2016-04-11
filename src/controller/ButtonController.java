@@ -1,9 +1,15 @@
 package controller;
 
 import main.Simulator;
+import printer.ExportToExcel;
+import view.SimulatorView;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -34,8 +40,8 @@ public class ButtonController extends AbstractController implements ActionListen
         Thread performerThread = new Thread() {
 
             public void run() {
-                ActionEvent e = getActionEvent();
-                String command = e.getActionCommand();
+                ActionEvent event = getActionEvent();
+                String command = event.getActionCommand();
 
                 switch (command) {
                     case "one step":
@@ -56,6 +62,21 @@ public class ButtonController extends AbstractController implements ActionListen
                     case "Exit Application":
                     	System.exit(0);
                     	break;
+                    case "Save stats to file":
+                        try {
+                            ExportToExcel export = new ExportToExcel();
+                            JFileChooser chooser = new JFileChooser();
+                            chooser.setFileFilter(new FileNameExtensionFilter("csv", "csv"));
+                            chooser.setSelectedFile(new File("example.csv"));
+                            int option = chooser.showSaveDialog(null);
+                            if (option == JFileChooser.APPROVE_OPTION)
+                            {
+                                export.export(simulator, chooser.getSelectedFile());
+                            }
+                            JOptionPane.showMessageDialog(simulator.getSimulatorView(), "Successfully saved the file");
+                        } catch (IOException e) {
+                            e.getMessage();
+                        }
                 }
             }
 

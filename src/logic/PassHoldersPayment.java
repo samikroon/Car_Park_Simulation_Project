@@ -7,8 +7,8 @@ public class PassHoldersPayment {
     private double parkingHolderRevenue;
     private double price = 6.50;
 
-    public PassHoldersPayment() {
-        parkingHolderRevenue = 0;
+    public PassHoldersPayment(double beginRevenue) {
+        parkingHolderRevenue = beginRevenue;
     }
 
     public void automaticPayment() {

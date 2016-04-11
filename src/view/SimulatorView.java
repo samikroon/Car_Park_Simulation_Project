@@ -54,6 +54,9 @@ public class SimulatorView extends AbstractView {
         
         JButton terminate = new JButton("Exit Application");
         terminate.addActionListener(buttonController);
+
+        JButton save = new JButton("Save stats to file");
+        save.addActionListener(buttonController);
       
 
         JMenuBar stepBar = new JMenuBar();
@@ -61,6 +64,7 @@ public class SimulatorView extends AbstractView {
         stepBar.add(stepHundredForward);
         stepBar.add(startButton);
         stepBar.add(pauseButton);
+        stepBar.add(save);
         contentPane.add(stepBar, BorderLayout.SOUTH);
 
         infoView = new InfoView(simulator);
@@ -161,7 +165,6 @@ public class SimulatorView extends AbstractView {
                         if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
                             return car;
                         } else if (car != null && car.getMinutesTillArrival() <= 0 && !car.getIsPaying() && car.isReservedSpot()) {
-                            System.out.println("je weet");
                             return car;
 
                         }
@@ -248,15 +251,14 @@ public class SimulatorView extends AbstractView {
                         Car car = getCarAt(location);
                         if(car == null) {
                             color = Color.white;
-                        } else if (car.isPassHolder() && !car.isReservedSpot() && !car.getWasReservedSpot()) {
-                            color = Color.cyan;
-                        } else if (!car.isPassHolder() && !car.isReservedSpot() && !car.getWasReservedSpot()) {
-                            color = Color.red;
                         } else if (car.getWasReservedSpot()) {
                             color = Color.black;
-                            System.out.println("ben nu hier" + car.isReservedSpot());
                         } else if (car.isReservedSpot()) {
                             color = Color.orange;
+                        } else if (car.isPassHolder()) {
+                            color = Color.cyan;
+                        } else if (!car.isPassHolder()) {
+                            color = Color.red;
                         } else {
                             color = Color.white;
                         }

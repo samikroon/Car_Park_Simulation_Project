@@ -13,6 +13,7 @@ public class Simulator {
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
     private PassHoldersPayment passHoldersPayment;
+    private ReservationPayment reservationPayment;
 
 
 
@@ -41,7 +42,8 @@ public class Simulator {
         entranceCarQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
-        passHoldersPayment = new PassHoldersPayment();
+        passHoldersPayment = new PassHoldersPayment(0);
+        reservationPayment = new ReservationPayment(0);
         simulatorView = new SimulatorView(3, 6, 30, this);
 
     }
@@ -127,10 +129,11 @@ public class Simulator {
                 int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
                 int minutesTillArrival;
                 if (car.isReservedSpot()) {
-                    minutesTillArrival = (int) (15 + random.nextFloat() *10 * 30);
+                    minutesTillArrival = (int) (15 + random.nextFloat() * 10 * 30);
                     stayMinutes = stayMinutes + minutesTillArrival;
                     car.setMinutesTillArrival(minutesTillArrival);
                     emptyReservedSpots++;
+                    reservationPayment.addReservationPayment();
                 }
                 car.setMinutesLeft(stayMinutes);
                 if (car.isPassHolder() && !car.isReservedSpot()) {
@@ -161,7 +164,6 @@ public class Simulator {
                 emptyReservedSpots--;
                 car.setReservedSpot(false);
                 car.setWasReservedSpot(true);
-                System.out.println("Hier kom ik zeker" + car.getWasReservedSpot());
             } else if (car.isPassHolder()) {
                 simulatorView.removeCarAt(car.getLocation());
                 exitCarQueue.addCar(car);
@@ -214,6 +216,8 @@ public class Simulator {
         }
     }
 
+
+
     public CarQueue getExitCarQueue() {
         return exitCarQueue;
     }
@@ -246,7 +250,15 @@ public class Simulator {
         return emptyReservedSpots;
     }
 
+    public ReservationPayment getReservationPayment() {
+        return reservationPayment;
+    }
+
     public PassHoldersPayment getPassHoldersPayment() {
         return passHoldersPayment;
+    }
+
+    public SimulatorView getSimulatorView() {
+        return simulatorView;
     }
 }
