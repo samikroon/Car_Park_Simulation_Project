@@ -8,8 +8,6 @@ import javax.swing.*;
  * Created by samikroon on 4/10/16.
  */
 public class InfoView extends AbstractView {
-    private JTable table;
-    private String[] columnNames = {"nameOfData", "Value"};
     private Object[][] data = new Object[5][2];
 
     public InfoView(Simulator simulator) {
@@ -33,20 +31,11 @@ public class InfoView extends AbstractView {
         int paymentQueue = simulator.getPaymentCarQueue().getQueue().size();
         int carsInside = simulator.getCarsInside();
         int carsPayed = simulator.getCarsPayed();
-        System.out.println("entrance: " + entranceQueue + "exit: " + exitQueue + "payment: " + paymentQueue);
         data[0][1] = entranceQueue;
         data[1][1] = exitQueue;
         data[2][1] = paymentQueue;
         data[3][1] = carsInside;
         data[4][1] = carsPayed;
         table = new JTable(data, columnNames);
-        repaint();
-
     }
-
-
-    public JTable getTable() {
-        return table;
-    }
-
 }

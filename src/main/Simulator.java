@@ -1,9 +1,6 @@
 package main;
 
-import logic.AdHocCar;
-import logic.Car;
-import logic.CarQueue;
-import logic.Location;
+import logic.*;
 import view.SimulatorView;
 
 
@@ -15,6 +12,7 @@ public class Simulator {
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
+    private PassHoldersPayment passHoldersPayment;
 
 
 
@@ -40,6 +38,7 @@ public class Simulator {
         entranceCarQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
+        passHoldersPayment = new PassHoldersPayment();
         simulatorView = new SimulatorView(3, 6, 30, this);
     }
 
@@ -102,9 +101,12 @@ public class Simulator {
         double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
         int numberOfCarsPerMinute = (int)Math.round(numberOfCarsPerHour / 60);
 
+
         // Add the cars to the back of the queue.
         for (int i = 0; i < numberOfCarsPerMinute; i++) {
+            boolean passHolder = random.nextDouble() <= 0.2;
             Car car = new AdHocCar();
+            if (passHolder) {car.setPassHolder(true);}
             entranceCarQueue.addCar(car);
         }
 
@@ -134,8 +136,14 @@ public class Simulator {
             if (car == null) {
                 break;
             }
-            car.setIsPaying(true);
-            paymentCarQueue.addCar(car);
+            if (car.isPassHolder()) {
+                simulatorView.removeCarAt(car.getLocation());
+                exitCarQueue.addCar(car);
+                passHoldersPayment.automaticPayment();
+            } else {
+                car.setIsPaying(true);
+                paymentCarQueue.addCar(car);
+            }
         }
 
         // Let cars pay.
@@ -191,5 +199,9 @@ public class Simulator {
 
     public int getCarsPayed() {
         return carsPayed;
+    }
+
+    public PassHoldersPayment getPassHoldersPayment() {
+        return passHoldersPayment;
     }
 }

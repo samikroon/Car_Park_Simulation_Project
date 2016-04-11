@@ -17,7 +17,10 @@ public class SimulatorView extends AbstractView {
     private Car[][][] cars;
     private ButtonController buttonController;
     private InfoView infoView;
+    private RevenueView revenueView;
     private JScrollPane scrollPane;
+    private JScrollPane scrollPane2;
+    private JSplitPane pane;
 
 
 
@@ -56,8 +59,11 @@ public class SimulatorView extends AbstractView {
         contentPane.add(stepBar, BorderLayout.SOUTH);
 
         infoView = new InfoView(simulator);
+        revenueView = new RevenueView(simulator);
         scrollPane = new JScrollPane(infoView.getTable());
-        contentPane.add(scrollPane, BorderLayout.EAST);
+        scrollPane2 = new JScrollPane(revenueView.getTable());
+        pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, scrollPane2);
+        contentPane.add(pane, BorderLayout.EAST);
 
 
 
@@ -73,7 +79,9 @@ public class SimulatorView extends AbstractView {
 
     public void updateView() {
         infoView.updateData();
+        revenueView.updateRevenueView();
         scrollPane.setViewportView(infoView.getTable());
+        scrollPane2.setViewportView(revenueView.getTable());
         carParkView.updateView();
     }
     
@@ -215,6 +223,7 @@ public class SimulatorView extends AbstractView {
         }
     
         public void updateView() {
+            Color color;
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {
                 size = getSize();
@@ -226,7 +235,15 @@ public class SimulatorView extends AbstractView {
                     for(int place = 0; place < getNumberOfPlaces(); place++) {
                         Location location = new Location(floor, row, place);
                         Car car = getCarAt(location);
-                        Color color = car == null ? Color.white : Color.red;
+                        if(car == null) {
+                            color = Color.white;
+                        } else if (car.isPassHolder()) {
+                            color = Color.cyan;
+                        } else if (!car.isPassHolder()){
+                            color = Color.red;
+                        } else {
+                            color = Color.white;
+                        }
                         drawPlace(graphics, location, color);
                     }
                 }
