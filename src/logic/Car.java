@@ -2,11 +2,14 @@ package logic;
 
 public abstract class Car {
 
-    private
-    Location location;
+    private Location location;
     private int minutesLeft;
+    private int minutesTillArrival;
     private boolean isPaying;
     private boolean isPassHolder;
+    private boolean reservedSpot;
+    private boolean wasReservedSpot;
+
 
     /**
      * Constructor for objects of class Car
@@ -31,6 +34,14 @@ public abstract class Car {
         this.minutesLeft = minutesLeft;
     }
 
+    public int getMinutesTillArrival() {
+        return minutesTillArrival;
+    }
+
+    public void setMinutesTillArrival(int minutesTillArrival) {
+        this.minutesTillArrival = minutesTillArrival;
+    }
+
     public boolean getIsPaying() {
         return isPaying;
     }
@@ -47,8 +58,25 @@ public abstract class Car {
         return isPassHolder;
     }
 
+    public void setReservedSpot(boolean reservedSpot) {
+        this.reservedSpot = reservedSpot;
+    }
+
+    public boolean isReservedSpot() {
+        return reservedSpot;
+    }
+
+    public void setWasReservedSpot(boolean wasReservedSpot) {
+        this.wasReservedSpot = wasReservedSpot;
+    }
+
+    public boolean getWasReservedSpot() {
+        return wasReservedSpot;
+    }
+
     public void tick() {
         minutesLeft--;
+        if(reservedSpot) {minutesTillArrival--;}
     }
 
 }

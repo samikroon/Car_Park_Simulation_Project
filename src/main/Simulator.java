@@ -26,6 +26,8 @@ public class Simulator {
     private int carsNormalInside = 0;
     private int carsHoldersInside = 0;
     private int carsPayed = 0;
+    private int carsReservedInside = 0;
+    private int emptyReservedSpots = 0;
 
 
     int weekDayArrivals= 200; // average number of arriving cars per hour
@@ -41,6 +43,7 @@ public class Simulator {
         exitCarQueue = new CarQueue();
         passHoldersPayment = new PassHoldersPayment();
         simulatorView = new SimulatorView(3, 6, 30, this);
+
     }
 
     public void run() {
@@ -63,7 +66,6 @@ public class Simulator {
      */
     public void runFalse(){
         this.run = false;
-        System.out.println("runFalse methode");
     }
     /**
      * Created by machiel 4/6/16
@@ -75,7 +77,6 @@ public class Simulator {
     }
 
     private void tick() {
-        System.out.println("simulator-tick");
         // Advance the time by one minute.
         minute++;
         while (minute > 59) {
@@ -106,8 +107,10 @@ public class Simulator {
         // Add the cars to the back of the queue.
         for (int i = 0; i < numberOfCarsPerMinute; i++) {
             boolean passHolder = random.nextDouble() <= 0.2;
+            boolean reservation = random.nextDouble() <=0.15;
             Car car = new AdHocCar();
             if (passHolder) {car.setPassHolder(true);}
+            if (reservation) {car.setReservedSpot(true); car.setWasReservedSpot(false);}
             entranceCarQueue.addCar(car);
         }
 
@@ -122,10 +125,17 @@ public class Simulator {
             if (freeLocation != null) {
                 simulatorView.setCarAt(freeLocation, car);
                 int stayMinutes = (int) (15 + random.nextFloat() * 10 * 60);
+                int minutesTillArrival;
+                if (car.isReservedSpot()) {
+                    minutesTillArrival = (int) (15 + random.nextFloat() *10 * 30);
+                    stayMinutes = stayMinutes + minutesTillArrival;
+                    car.setMinutesTillArrival(minutesTillArrival);
+                    emptyReservedSpots++;
+                }
                 car.setMinutesLeft(stayMinutes);
-                if (car.isPassHolder()) {
+                if (car.isPassHolder() && !car.isReservedSpot()) {
                     carsHoldersInside++;
-                } else {
+                } else if (!car.isReservedSpot()){
                     carsNormalInside++;
                 }
             }
@@ -141,7 +151,18 @@ public class Simulator {
             if (car == null) {
                 break;
             }
-            if (car.isPassHolder()) {
+            if (car.getMinutesLeft() > 0 && car.isReservedSpot()) {
+                if (car.isPassHolder()) {
+                    carsHoldersInside++;
+                } else {
+                    carsNormalInside++;
+                }
+                carsReservedInside++;
+                emptyReservedSpots--;
+                car.setReservedSpot(false);
+                car.setWasReservedSpot(true);
+                System.out.println("Hier kom ik zeker" + car.getWasReservedSpot());
+            } else if (car.isPassHolder()) {
                 simulatorView.removeCarAt(car.getLocation());
                 exitCarQueue.addCar(car);
                 passHoldersPayment.automaticPayment();
@@ -174,6 +195,9 @@ public class Simulator {
                 carsHoldersInside--;
             } else {
                 carsNormalInside--;
+            }
+            if (car.isReservedSpot()) {
+                carsReservedInside--;
             }
             // Bye!
         }
@@ -212,6 +236,14 @@ public class Simulator {
 
     public int getCarsPayed() {
         return carsPayed;
+    }
+
+    public int getCarsReservedInside() {
+        return carsReservedInside;
+    }
+
+    public int getEmptyReservedSpots() {
+        return emptyReservedSpots;
     }
 
     public PassHoldersPayment getPassHoldersPayment() {

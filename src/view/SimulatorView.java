@@ -160,6 +160,10 @@ public class SimulatorView extends AbstractView {
                         Car car = getCarAt(location);
                         if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
                             return car;
+                        } else if (car != null && car.getMinutesTillArrival() <= 0 && !car.getIsPaying() && car.isReservedSpot()) {
+                            System.out.println("je weet");
+                            return car;
+
                         }
                     }
                 }
@@ -244,10 +248,15 @@ public class SimulatorView extends AbstractView {
                         Car car = getCarAt(location);
                         if(car == null) {
                             color = Color.white;
-                        } else if (car.isPassHolder()) {
+                        } else if (car.isPassHolder() && !car.isReservedSpot() && !car.getWasReservedSpot()) {
                             color = Color.cyan;
-                        } else if (!car.isPassHolder()){
+                        } else if (!car.isPassHolder() && !car.isReservedSpot() && !car.getWasReservedSpot()) {
                             color = Color.red;
+                        } else if (car.getWasReservedSpot()) {
+                            color = Color.black;
+                            System.out.println("ben nu hier" + car.isReservedSpot());
+                        } else if (car.isReservedSpot()) {
+                            color = Color.orange;
                         } else {
                             color = Color.white;
                         }
