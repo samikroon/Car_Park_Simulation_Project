@@ -4,7 +4,6 @@ import logic.AdHocCar;
 import logic.Car;
 import logic.CarQueue;
 import logic.Location;
-import view.InfoView;
 import view.SimulatorView;
 
 
@@ -33,7 +32,7 @@ public class Simulator {
     private int carsPayed = 0;
 
 
-    int weekDayArrivals= 50; // average number of arriving cars per hour
+    int weekDayArrivals= 200; // average number of arriving cars per hour
     int weekendArrivals = 90; // average number of arriving cars per hour
 
     int enterSpeed = 3; // number of cars that can enter per minute
@@ -111,6 +110,7 @@ public class Simulator {
             Car car = new AdHocCar();
             entranceCarQueue.addCar(car);
             entranceQueueLength++;
+            System.out.println(entranceQueueLength);
         }
 
         // Remove car from the front of the queue and assign to a parking space.
