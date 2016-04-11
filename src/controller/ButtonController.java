@@ -1,6 +1,5 @@
 package controller;
 
-
 import main.Simulator;
 
 import java.awt.event.ActionEvent;
