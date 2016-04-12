@@ -93,7 +93,10 @@ public class SimulatorView extends AbstractView {
         scrollPane4 = new JScrollPane(legenda.getTable());
         pane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane3, scrollPane4);
         pane3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, scrollPane2);
+        //pane2.setResizeWeight(1.0);
+        pane3.setResizeWeight(0.4);
         pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, pane3, pane2);
+        pane.setResizeWeight(0.7);
         contentPane.add(pane, BorderLayout.EAST);
 
 
