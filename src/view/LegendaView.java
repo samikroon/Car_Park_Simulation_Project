@@ -9,6 +9,7 @@ import javax.swing.*;
  */
 public class LegendaView extends AbstractView{
     private Object[][] data = new Object[5][2];
+    private String[] legendaColumnNames = {"Color", "Type"};
 
     public LegendaView(Simulator simulator) {
         super(simulator);
@@ -22,6 +23,6 @@ public class LegendaView extends AbstractView{
         data[2][1] = "Spot with cardholder customer";
         data[3][1] = "Reserved spot";
         data[4][1] = "Customer that reserved a spot";
-        table = new JTable(data, columnNames);
+        table = new JTable(data, legendaColumnNames);
     }
 }
