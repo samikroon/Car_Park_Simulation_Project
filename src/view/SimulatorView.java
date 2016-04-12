@@ -85,7 +85,9 @@ public class SimulatorView extends AbstractView {
         pieChart = new BarChart(simulator);
         scrollPane = new JScrollPane(infoView.getTable());
         scrollPane2 = new JScrollPane(revenueView.getTable());
-        scrollPane3 = new JScrollPane(pieChart.getContentPane());
+        pieChart.setDataset();
+
+        scrollPane3 = new JScrollPane(pieChart.createChart());
         pane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane2, scrollPane3);
         pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, pane2);
         contentPane.add(pane, BorderLayout.EAST);
@@ -110,9 +112,9 @@ public class SimulatorView extends AbstractView {
         revenueView.updateRevenueView();
         scrollPane.setViewportView(infoView.getTable());
         scrollPane2.setViewportView(revenueView.getTable());
+        pieChart.setDataset();
+        scrollPane3.setViewportView(pieChart.createChart());
         carParkView.updateView();
-        pieChart.repaint();
-
 
     }
     
