@@ -32,8 +32,17 @@ public class RevenueView extends AbstractView{
         data[2][1] = revenueFromReservation;
         table = new JTable(data, columnNames);
     }
+    
+    public double  getCurrentRevenue(){
+    	return (simulator.getCarsPayed() * price) + simulator.getPassHoldersPayment().getParkingHolderRevenue() + (simulator.getReservationPayment().getRevenueFromReservation());
+    }
 
-    public double getPrice() {
-        return price;
+    public double getExpectedRevenue() {
+        return ((simulator.getCarsPayed() + simulator.getCarsNormalInside()) * price) +
+                (simulator.getPassHoldersPayment().getParkingHolderRevenue() + (simulator.getCarsHoldersInside() * simulator.getPassHoldersPayment().getPrice()) );
+    }
+    
+    public double getRevenueFromReservation(){
+    	return simulator.getReservationPayment().getRevenueFromReservation();
     }
 }
