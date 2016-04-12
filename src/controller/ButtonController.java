@@ -104,9 +104,6 @@ public class ButtonController extends AbstractController implements ActionListen
                                 ex.getMessage();
                                 JOptionPane.showMessageDialog(simulator.getSimulatorView(), "You did not fill in an Integer");
                             }
-
-                            System.out.println("x value: " + weekField.getText());
-                            System.out.println("y value: " + weekendField.getText());
                         }
                         //weekDayArrivals= 200; // average number of arriving cars per hour
                         //int weekendArrivals = 90;

@@ -21,7 +21,10 @@ public class SimulatorView extends AbstractView {
     private RevenueView revenueView;
     private JScrollPane scrollPane;
     private JScrollPane scrollPane2;
+    private JScrollPane scrollPane3;
     private JSplitPane pane;
+    private JSplitPane pane2;
+    private BarChart pieChart;
 
 
 
@@ -79,10 +82,14 @@ public class SimulatorView extends AbstractView {
 
         infoView = new InfoView(simulator);
         revenueView = new RevenueView(simulator);
+        pieChart = new BarChart(simulator);
         scrollPane = new JScrollPane(infoView.getTable());
         scrollPane2 = new JScrollPane(revenueView.getTable());
-        pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, scrollPane2);
+        scrollPane3 = new JScrollPane(pieChart.getContentPane());
+        pane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane2, scrollPane3);
+        pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, pane2);
         contentPane.add(pane, BorderLayout.EAST);
+
 
         
 
@@ -104,6 +111,9 @@ public class SimulatorView extends AbstractView {
         scrollPane.setViewportView(infoView.getTable());
         scrollPane2.setViewportView(revenueView.getTable());
         carParkView.updateView();
+        pieChart.repaint();
+
+
     }
     
      public int getNumberOfFloors() {

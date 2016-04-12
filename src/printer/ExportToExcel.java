@@ -21,18 +21,18 @@ public class ExportToExcel {
         
         
         
-        bw.write("Queue at entrance "+simulator.getEntranceCarQueue().getQueue().size()+"\n");
-        bw.write("Queue at exit "+simulator.getExitCarQueue().getQueue().size()+"\n");
-        bw.write("Queue at payment "+simulator.getPaymentCarQueue().getQueue().size()+"\n");
-        bw.write("Normal cars inside "+simulator.getCarsNormalInside()+"\n");
-        bw.write("Parking card holder cars inside "+simulator.getCarsHoldersInside()+"\n");
-        bw.write("Cars paid "+simulator.getCarsPayed()+"\n");
-        bw.write("Empty reserved spots "+simulator.getEmptyReservedSpots()+"\n");
-        bw.write("filled reserved spots "+simulator.getCarsReservedInside()+"\n");
+        bw.write("Queue at entrance,"+simulator.getEntranceCarQueue().getQueue().size()+"\n");
+        bw.write("Queue at exit,"+simulator.getExitCarQueue().getQueue().size()+"\n");
+        bw.write("Queue at payment,"+simulator.getPaymentCarQueue().getQueue().size()+"\n");
+        bw.write("Normal cars inside,"+simulator.getCarsNormalInside()+"\n");
+        bw.write("Parking card holder cars inside,"+simulator.getCarsHoldersInside()+"\n");
+        bw.write("Cars paid,"+simulator.getCarsPayed()+"\n");
+        bw.write("Empty reserved spots,"+simulator.getEmptyReservedSpots()+"\n");
+        bw.write("filled reserved spots,"+simulator.getCarsReservedInside()+"\n");
         
-        bw.write("Current revenue "+currentRevenue+"\n");
-        bw.write("Expected revenue "+expectedRevenue+"\n");
-        bw.write("Revenue from reservation "+revenueFromReservation+"\n");
+        bw.write("Current revenue,"+currentRevenue+"\n");
+        bw.write("Expected revenue,"+expectedRevenue+"\n");
+        bw.write("Revenue from reservation,"+revenueFromReservation+"\n");
         
         bw.close();
     }
