@@ -26,22 +26,17 @@ private DefaultPieDataset dataset = new DefaultPieDataset();
 
     public void setDataset() {
         double cardHolder = (double) simulator.getCarsHoldersInside();
-        System.out.println(cardHolder);
         double normalCar = (double) simulator.getCarsNormalInside();
         double totalCars = cardHolder+normalCar;
-        System.out.println(totalCars);
         double percentageCardHolder;
         double percentageNormalCar;
         if (totalCars != 0) {
             percentageCardHolder = (cardHolder / totalCars) * 100;
-            System.out.println(percentageCardHolder);
             percentageNormalCar = (normalCar / totalCars) * 100;
-            System.out.println(percentageNormalCar);
         } else {
             percentageCardHolder = 0;
             percentageNormalCar = 0;
         }
-        System.out.println(percentageCardHolder);
 
 
         dataset.setValue("Cardholders inside", percentageCardHolder);
