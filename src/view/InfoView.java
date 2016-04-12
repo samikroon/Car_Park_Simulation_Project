@@ -17,7 +17,7 @@ public class InfoView extends AbstractView {
         data[2][0] = "Queue at payment";
         data[3][0] = "Normal cars inside";
         data[4][0] = "Parking holder cars inside";
-        data[5][0] = "Cars Payed";
+        data[5][0] = "Cars Paid";
         data[6][0] = "Empty reserved spots";
         data[7][0] = "Filled reserved spots";
         data[0][1] = 0;
