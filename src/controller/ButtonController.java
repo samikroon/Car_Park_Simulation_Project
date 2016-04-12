@@ -79,8 +79,35 @@ public class ButtonController extends AbstractController implements ActionListen
                         }
                         break;
                     case "Edit incoming cars":
-                        JPanel popup = new JPanel();
+                        JTextField weekField = new JTextField(5);
+                        JTextField weekendField = new JTextField(5);
 
+                        JPanel popup = new JPanel();
+                        popup.add(new JLabel("Number of arrivals during the week:"));
+                        popup.add(weekField);
+                        popup.add(new JLabel("Number of arrivals during the weekend:"));
+                        popup.add(weekendField);
+
+                        int result = JOptionPane.showConfirmDialog(null, popup,
+                                "Please enter the number in integer form, the standard is 200:100", JOptionPane.OK_CANCEL_OPTION);
+                        if (result == JOptionPane.OK_OPTION) {
+                            try{
+                                if (weekField.getText() != null) {
+                                    int week  = Integer.parseInt(weekField.getText());
+                                    simulator.setWeekDayArrivals(week);
+                                }
+                                if (weekendField.getText() != null) {
+                                    int weekend = Integer.parseInt(weekendField.getText());
+                                    simulator.setWeekendArrivals(weekend);
+                                }
+                            }catch (NumberFormatException ex) {
+                                ex.getMessage();
+                                JOptionPane.showMessageDialog(simulator.getSimulatorView(), "You did not fill in an Integer");
+                            }
+
+                            System.out.println("x value: " + weekField.getText());
+                            System.out.println("y value: " + weekendField.getText());
+                        }
                         //weekDayArrivals= 200; // average number of arriving cars per hour
                         //int weekendArrivals = 90;
                 }

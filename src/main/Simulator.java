@@ -32,7 +32,7 @@ public class Simulator {
 
 
     int weekDayArrivals= 200; // average number of arriving cars per hour
-    int weekendArrivals = 90; // average number of arriving cars per hour
+    int weekendArrivals = 100; // average number of arriving cars per hour
 
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 10; // number of cars that can pay per minute
@@ -248,6 +248,14 @@ public class Simulator {
 
     public int getEmptyReservedSpots() {
         return emptyReservedSpots;
+    }
+
+    public void setWeekDayArrivals(int arrivals) {
+        this.weekDayArrivals = arrivals;
+    }
+
+    public void setWeekendArrivals(int arrivals) {
+        this.weekendArrivals = arrivals;
     }
 
     public ReservationPayment getReservationPayment() {
