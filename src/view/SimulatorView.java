@@ -57,6 +57,9 @@ public class SimulatorView extends AbstractView {
 
         JButton save = new JButton("Save stats to file");
         save.addActionListener(buttonController);
+
+        JButton editIncomingCars = new JButton("Edit incoming cars");
+        editIncomingCars.addActionListener(buttonController);
       
 
         JMenuBar stepBar = new JMenuBar();
@@ -64,8 +67,15 @@ public class SimulatorView extends AbstractView {
         stepBar.add(stepHundredForward);
         stepBar.add(startButton);
         stepBar.add(pauseButton);
-        stepBar.add(save);
+
+
         contentPane.add(stepBar, BorderLayout.SOUTH);
+
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(terminate);
+        menuBar.add(save);
+        menuBar.add(editIncomingCars);
+        contentPane.add(menuBar, BorderLayout.NORTH);
 
         infoView = new InfoView(simulator);
         revenueView = new RevenueView(simulator);
@@ -75,9 +85,8 @@ public class SimulatorView extends AbstractView {
         contentPane.add(pane, BorderLayout.EAST);
 
         
-        JMenuBar terBar = new JMenuBar();
-        terBar.add(terminate);
-        contentPane.add(terBar, BorderLayout.NORTH);
+
+
 
         pack();
         setVisible(true);
@@ -140,6 +149,10 @@ public class SimulatorView extends AbstractView {
             cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
             car.setLocation(null);
             return car;
+        }
+
+        public RevenueView getRevenueView() {
+            return revenueView;
         }
     
         public Location getFirstFreeLocation() {

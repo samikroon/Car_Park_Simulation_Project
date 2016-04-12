@@ -32,4 +32,8 @@ public class RevenueView extends AbstractView{
         data[2][1] = revenueFromReservation;
         table = new JTable(data, columnNames);
     }
+
+    public double getPrice() {
+        return price;
+    }
 }

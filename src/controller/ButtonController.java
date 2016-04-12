@@ -2,7 +2,7 @@ package controller;
 
 import main.Simulator;
 import printer.ExportToExcel;
-import view.SimulatorView;
+
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -77,6 +77,12 @@ public class ButtonController extends AbstractController implements ActionListen
                         } catch (IOException e) {
                             e.getMessage();
                         }
+                        break;
+                    case "Edit incoming cars":
+                        JPanel popup = new JPanel();
+
+                        //weekDayArrivals= 200; // average number of arriving cars per hour
+                        //int weekendArrivals = 90;
                 }
             }
 
