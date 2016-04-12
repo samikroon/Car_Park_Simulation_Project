@@ -7,8 +7,6 @@ import main.Simulator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-
 
 public class SimulatorView extends AbstractView {
     private CarParkView carParkView;
@@ -22,9 +20,12 @@ public class SimulatorView extends AbstractView {
     private JScrollPane scrollPane;
     private JScrollPane scrollPane2;
     private JScrollPane scrollPane3;
+    private JScrollPane scrollPane4;
     private JSplitPane pane;
     private JSplitPane pane2;
+    private JSplitPane pane3;
     private BarChart pieChart;
+    private LegendaView legenda;
 
 
 
@@ -63,6 +64,7 @@ public class SimulatorView extends AbstractView {
 
         JButton editIncomingCars = new JButton("Edit incoming cars");
         editIncomingCars.addActionListener(buttonController);
+
       
 
         JMenuBar stepBar = new JMenuBar();
@@ -70,7 +72,6 @@ public class SimulatorView extends AbstractView {
         stepBar.add(stepHundredForward);
         stepBar.add(startButton);
         stepBar.add(pauseButton);
-
 
         contentPane.add(stepBar, BorderLayout.SOUTH);
 
@@ -83,18 +84,17 @@ public class SimulatorView extends AbstractView {
         infoView = new InfoView(simulator);
         revenueView = new RevenueView(simulator);
         pieChart = new BarChart(simulator);
+        legenda = new LegendaView(simulator);
         scrollPane = new JScrollPane(infoView.getTable());
         scrollPane2 = new JScrollPane(revenueView.getTable());
         pieChart.setDataset();
 
         scrollPane3 = new JScrollPane(pieChart.createChart());
-        pane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane2, scrollPane3);
-        pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, pane2);
+        scrollPane4 = new JScrollPane(legenda.getTable());
+        pane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane3, scrollPane4);
+        pane3 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, scrollPane2);
+        pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, pane3, pane2);
         contentPane.add(pane, BorderLayout.EAST);
-
-
-        
-
 
 
         pack();
@@ -112,32 +112,33 @@ public class SimulatorView extends AbstractView {
         revenueView.updateRevenueView();
         scrollPane.setViewportView(infoView.getTable());
         scrollPane2.setViewportView(revenueView.getTable());
+        pieChart.dispose();
         pieChart.setDataset();
         scrollPane3.setViewportView(pieChart.createChart());
         carParkView.updateView();
 
     }
     
-     public int getNumberOfFloors() {
+    public int getNumberOfFloors() {
             return numberOfFloors;
         }
     
-        public int getNumberOfRows() {
+    public int getNumberOfRows() {
             return numberOfRows;
         }
     
-        public int getNumberOfPlaces() {
+    public int getNumberOfPlaces() {
             return numberOfPlaces;
         }
     
-        public Car getCarAt(Location location) {
+    public Car getCarAt(Location location) {
             if (!locationIsValid(location)) {
                 return null;
             }
             return cars[location.getFloor()][location.getRow()][location.getPlace()];
         }
     
-        public boolean setCarAt(Location location, Car car) {
+    public boolean setCarAt(Location location, Car car) {
             if (!locationIsValid(location)) {
                 return false;
             }
@@ -149,8 +150,8 @@ public class SimulatorView extends AbstractView {
             }
             return false;
         }
-    
-        public Car removeCarAt(Location location) {
+
+    public Car removeCarAt(Location location) {
             if (!locationIsValid(location)) {
                 return null;
             }
@@ -163,65 +164,75 @@ public class SimulatorView extends AbstractView {
             return car;
         }
 
-        public RevenueView getRevenueView() {
+    public RevenueView getRevenueView() {
             return revenueView;
         }
-    
-        public Location getFirstFreeLocation() {
-            for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-                for (int row = 0; row < getNumberOfRows(); row++) {
-                    for (int place = 0; place < getNumberOfPlaces(); place++) {
-                        Location location = new Location(floor, row, place);
-                        if (getCarAt(location) == null) {
-                            return location;
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-    
-        public Car getFirstLeavingCar() {
-            for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-                for (int row = 0; row < getNumberOfRows(); row++) {
-                    for (int place = 0; place < getNumberOfPlaces(); place++) {
-                        Location location = new Location(floor, row, place);
-                        Car car = getCarAt(location);
-                        if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
-                            return car;
-                        } else if (car != null && car.getMinutesTillArrival() <= 0 && !car.getIsPaying() && car.isReservedSpot()) {
-                            return car;
 
-                        }
+    public ButtonController getButtonController() {
+        return buttonController;
+    }
+
+    public void updatePieChart() {
+        pieChart.dispose();
+        pieChart.setDataset();
+        scrollPane3.setViewportView(pieChart.createChart());
+    }
+
+    
+    public Location getFirstFreeLocation() {
+        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    if (getCarAt(location) == null) {
+                        return location;
                     }
                 }
             }
-            return null;
         }
+        return null;
+    }
     
-        public void tick() {
-            for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-                for (int row = 0; row < getNumberOfRows(); row++) {
-                    for (int place = 0; place < getNumberOfPlaces(); place++) {
-                        Location location = new Location(floor, row, place);
-                        Car car = getCarAt(location);
-                        if (car != null) {
-                            car.tick();
-                        }
+    public Car getFirstLeavingCar() {
+        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    Car car = getCarAt(location);
+                    if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
+                        return car;
+                    } else if (car != null && car.getMinutesTillArrival() <= 0 && !car.getIsPaying() && car.isReservedSpot()) {
+                        return car;
                     }
                 }
             }
         }
+        return null;
+    }
     
-        private boolean locationIsValid(Location location) {
-            int floor = location.getFloor();
-            int row = location.getRow();
-            int place = location.getPlace();
-            if (floor < 0 || floor >= numberOfFloors || row < 0 || row > numberOfRows || place < 0 || place > numberOfPlaces) {
-                return false;
+    public void tick() {
+        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    Car car = getCarAt(location);
+                    if (car != null) {
+                        car.tick();
+                    }
+                }
             }
-            return true;
         }
+    }
+    
+    private boolean locationIsValid(Location location) {
+        int floor = location.getFloor();
+        int row = location.getRow();
+        int place = location.getPlace();
+        if (floor < 0 || floor >= numberOfFloors || row < 0 || row > numberOfRows || place < 0 || place > numberOfPlaces) {
+            return false;
+        }
+        return true;
+    }
     
     private class CarParkView extends JPanel {
         

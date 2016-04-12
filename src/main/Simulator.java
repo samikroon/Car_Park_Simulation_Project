@@ -58,6 +58,7 @@ public class Simulator {
         for (int i = 0; i < steps && run; i++) {
             tick();
         }
+        simulatorView.getButtonController().setAlreadyRunning(false);
     }
 
     /**

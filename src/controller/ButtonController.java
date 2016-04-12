@@ -17,6 +17,7 @@ import java.io.IOException;
  */
 public class ButtonController extends AbstractController implements ActionListener{
     private ActionEvent event;
+    private Boolean alreadyRunning = false;
 
     public ButtonController(Simulator simulator) {
         super(simulator);
@@ -29,6 +30,10 @@ public class ButtonController extends AbstractController implements ActionListen
 
     public ActionEvent getActionEvent() {
         return event;
+    }
+
+    public void setAlreadyRunning(boolean alreadyRunning) {
+        this.alreadyRunning = alreadyRunning;
     }
 
 
@@ -45,18 +50,28 @@ public class ButtonController extends AbstractController implements ActionListen
 
                 switch (command) {
                     case "one step":
-                        simulator.runTrue();
-                        simulator.runSteps(1);
+                        if (!alreadyRunning) {
+                            simulator.runTrue();
+                            alreadyRunning = true;
+                            simulator.runSteps(1);
+                        }
                         break;
                     case "hundred steps":
-                        simulator.runTrue();
-                        simulator.runSteps(100);
+                        if (!alreadyRunning) {
+                            simulator.runTrue();
+                            alreadyRunning = true;
+                            simulator.runSteps(100);
+                        }
                         break;
                     case "Start":
-                        simulator.runTrue();
-                        simulator.runSteps(Integer.MAX_VALUE);
+                        if (!alreadyRunning) {
+                            simulator.runTrue();
+                            alreadyRunning = true;
+                            simulator.runSteps(Integer.MAX_VALUE);
+                        }
                         break;
                     case "Pause":
+                        alreadyRunning = false;
                         simulator.runFalse();
                         break;
                     case "Exit Application":
@@ -105,14 +120,12 @@ public class ButtonController extends AbstractController implements ActionListen
                                 JOptionPane.showMessageDialog(simulator.getSimulatorView(), "You did not fill in an Integer");
                             }
                         }
-                        //weekDayArrivals= 200; // average number of arriving cars per hour
-                        //int weekendArrivals = 90;
+                        break;
                 }
             }
 
         };
         performerThread.start();
-
     }
 
 }
