@@ -31,8 +31,8 @@ public class Simulator {
     private int emptyReservedSpots = 0;
 
 
-    int weekDayArrivals= 200; // average number of arriving cars per hour
-    int weekendArrivals = 100; // average number of arriving cars per hour
+    int weekDayArrivals= 50; // average number of arriving cars per hour
+    int weekendArrivals = 90; // average number of arriving cars per hour
 
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 10; // number of cars that can pay per minute
@@ -59,6 +59,7 @@ public class Simulator {
             tick();
         }
         simulatorView.getButtonController().setAlreadyRunning(false);
+        simulatorView.getButtonController().getPerformerThread().interrupt();
     }
 
     /**

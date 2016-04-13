@@ -18,6 +18,7 @@ import java.io.IOException;
 public class ButtonController extends AbstractController implements ActionListener{
     private ActionEvent event;
     private Boolean alreadyRunning = false;
+    private Thread performerThread;
 
     public ButtonController(Simulator simulator) {
         super(simulator);
@@ -32,8 +33,13 @@ public class ButtonController extends AbstractController implements ActionListen
         return event;
     }
 
+
     public void setAlreadyRunning(boolean alreadyRunning) {
         this.alreadyRunning = alreadyRunning;
+    }
+
+    public Thread getPerformerThread() {
+        return performerThread;
     }
 
 
@@ -42,7 +48,7 @@ public class ButtonController extends AbstractController implements ActionListen
     public void actionPerformed(ActionEvent e)
     {
         setActionEvent(e);
-        Thread performerThread = new Thread() {
+        performerThread = new Thread() {
 
             public void run() {
                 ActionEvent event = getActionEvent();
@@ -104,7 +110,7 @@ public class ButtonController extends AbstractController implements ActionListen
                         popup.add(weekendField);
 
                         int result = JOptionPane.showConfirmDialog(null, popup,
-                                "Please enter the number in integer form, the standard is 200:100", JOptionPane.OK_CANCEL_OPTION);
+                                "Please enter the number in integer form, the standard is 50:90", JOptionPane.OK_CANCEL_OPTION);
                         if (result == JOptionPane.OK_OPTION) {
                             try{
                                 if (weekField.getText() != null) {

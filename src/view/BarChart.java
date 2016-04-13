@@ -17,7 +17,8 @@ import java.awt.*;
 
 
 class BarChart extends AbstractView{
-private DefaultPieDataset dataset = new DefaultPieDataset();
+    private DefaultPieDataset dataset = new DefaultPieDataset();
+    private JFreeChart pieChart;
 
 
     public BarChart(Simulator simulator) {
@@ -44,7 +45,7 @@ private DefaultPieDataset dataset = new DefaultPieDataset();
     }
 
     public ChartPanel createChart() {
-        JFreeChart pieChart = ChartFactory.createPieChart(
+        pieChart = ChartFactory.createPieChart(
                 "Cars inside",
                 dataset,
                 true,
@@ -60,6 +61,8 @@ private DefaultPieDataset dataset = new DefaultPieDataset();
         repaint();
         return new ChartPanel(pieChart);
     }
+
+
 
 }
 

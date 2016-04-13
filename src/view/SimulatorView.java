@@ -88,7 +88,6 @@ public class SimulatorView extends AbstractView {
         scrollPane = new JScrollPane(infoView.getTable());
         scrollPane2 = new JScrollPane(revenueView.getTable());
         pieChart.setDataset();
-
         scrollPane3 = new JScrollPane(pieChart.createChart());
         scrollPane4 = new JScrollPane(legenda.getTable());
         pane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane3, scrollPane4);
@@ -115,10 +114,16 @@ public class SimulatorView extends AbstractView {
         revenueView.updateRevenueView();
         scrollPane.setViewportView(infoView.getTable());
         scrollPane2.setViewportView(revenueView.getTable());
-        pieChart.dispose();
-        pieChart.setDataset();
-        scrollPane3.setViewportView(pieChart.createChart());
+        updatePieChart();
         carParkView.updateView();
+
+    }
+
+    public void updatePieChart() {
+        pieChart.removeAll();
+        pieChart.revalidate();
+        pieChart.setDataset();
+        pieChart.repaint();
 
     }
     
@@ -175,11 +180,7 @@ public class SimulatorView extends AbstractView {
         return buttonController;
     }
 
-    public void updatePieChart() {
-        pieChart.dispose();
-        pieChart.setDataset();
-        scrollPane3.setViewportView(pieChart.createChart());
-    }
+
 
     
     public Location getFirstFreeLocation() {
@@ -253,7 +254,7 @@ public class SimulatorView extends AbstractView {
          * Overridden. Tell the GUI manager how big we would like to be.
          */
         public Dimension getPreferredSize() {
-            return new Dimension(1000, 500);
+            return new Dimension(1200, 500);
         }
     
         /**
