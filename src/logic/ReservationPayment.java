@@ -1,8 +1,5 @@
 package logic;
 
-/**
- * Created by samikroon on 4/11/16.
- */
 public class ReservationPayment {
     private double revenueFromReservation;
     private double reservationPrice = 1.00;

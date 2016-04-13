@@ -4,9 +4,6 @@ import main.Simulator;
 
 import javax.swing.*;
 
-/**
- * Created by samikroon on 4/10/16.
- */
 public class InfoView extends AbstractView {
     private Object[][] data = new Object[8][2];
 

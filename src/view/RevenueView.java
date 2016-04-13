@@ -4,9 +4,6 @@ import main.Simulator;
 
 import javax.swing.*;
 
-/**
- * Created by samikroon on 4/11/16.
- */
 public class RevenueView extends AbstractView{
     private Object[][] data = new Object[3][2];
     private double price = 8.0;

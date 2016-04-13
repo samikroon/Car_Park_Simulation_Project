@@ -1,8 +1,5 @@
 package logic;
 
-/**
- * Created by samikroon on 4/11/16.
- */
 public class PassHoldersPayment {
     private double parkingHolderRevenue;
     private double price = 6.50;

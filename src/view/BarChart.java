@@ -9,13 +9,6 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import java.awt.*;
 
-
-
-/**
- * Created by samikroon on 4/12/16.
- */
-
-
 class BarChart extends AbstractView{
     private DefaultPieDataset dataset = new DefaultPieDataset();
     private JFreeChart pieChart;

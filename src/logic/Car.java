@@ -11,9 +11,6 @@ public abstract class Car {
     private boolean wasReservedSpot;
 
 
-    /**
-     * Constructor for objects of class Car
-     */
     public Car() {
 
     }

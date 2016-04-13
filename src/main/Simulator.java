@@ -62,20 +62,10 @@ public class Simulator {
         simulatorView.getButtonController().getPerformerThread().interrupt();
     }
 
-    /**
-     * Created by machiel 4/6/16
-     * De methode runFalse geeft aan de boolean run de waarde False.
-     * Door aan de boolean run de waarde false te geven
-     * zullen de methode's run en runSteps hun for loop niet verder door lopen.
-     */
     public void runFalse(){
         this.run = false;
     }
-    /**
-     * Created by machiel 4/6/16
-     * De methode runTrue geeft aan de boolean run de waarde true.
-     * Deze waarde moet true zijn als methode's run en runsteps wilt uit voeren.
-     */
+
     public void runTrue(){
         this.run = true;
     }

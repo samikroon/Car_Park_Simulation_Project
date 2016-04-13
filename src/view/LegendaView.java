@@ -4,9 +4,6 @@ import main.Simulator;
 
 import javax.swing.*;
 
-/**
- * Created by samikroon on 4/12/16.
- */
 public class LegendaView extends AbstractView{
     private Object[][] data = new Object[5][2];
     private String[] legendaColumnNames = {"Color", "Type"};

@@ -12,9 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-/**
- * Created by samikroon on 4/6/16.
- */
+
 public class ButtonController extends AbstractController implements ActionListener{
     private ActionEvent event;
     private Boolean alreadyRunning = false;
